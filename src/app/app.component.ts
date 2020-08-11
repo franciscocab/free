@@ -3,13 +3,14 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { UserService } from './services/user.service';
 import { CategoryService } from './services/category.service';
+import { EmpresaService } from './services/empresa.service';
 import { global } from './services/global';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [UserService, CategoryService]
+  providers: [UserService, CategoryService, EmpresaService]
 })
 export class AppComponent implements OnInit, DoCheck{
   public title = 'Free';
@@ -17,16 +18,19 @@ export class AppComponent implements OnInit, DoCheck{
   public token;
   public url;
   public categories;
+  public empresas;
 
   constructor(
     private _userService: UserService,
-    private _categoryService: CategoryService
+    private _categoryService: CategoryService,
+    private _empresaService: EmpresaService
   ){
     this.loadUser();
   }
 
   ngOnInit(): void {
-    this.getCategories();
+    /*this.getCategories();*/
+    this.getEmpresas();
   }
 
   ngDoCheck(): void {
@@ -39,7 +43,21 @@ export class AppComponent implements OnInit, DoCheck{
     this.token = this._userService.getToken();
   }
 
-  getCategories(){
+  getEmpresas(){
+    this._empresaService.getEmpresas().subscribe(
+        response => {
+          if(response.status == 'success'){
+            this.empresas = response.empresas;
+
+          }
+        },
+        error => {
+          console.log('error');
+        }
+    )
+  }
+
+  /*getCategories(){
     this._categoryService.getCategories().subscribe(
         response => {
           if(response.status == 'success'){
@@ -51,6 +69,6 @@ export class AppComponent implements OnInit, DoCheck{
           console.log('error');
         }
     )
-  }
+  }*/
 
 }

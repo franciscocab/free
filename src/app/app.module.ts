@@ -22,6 +22,8 @@ import { IdentityGuard } from './services/identity.guard';
 import { UserService } from './services/user.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PostListComponent } from './components/post-list/post-list.component';
+import { EmpresaNewComponent } from './components/empresa-new/empresa-new.component';
+import { EmpresaDetailComponent } from './components/empresa-detail/empresa-detail.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { PostListComponent } from './components/post-list/post-list.component';
       PostEditComponent,
       CategoryDetailComponent,
       ProfileComponent,
-      PostListComponent
+      PostListComponent,
+      EmpresaNewComponent,
+      EmpresaDetailComponent
   ],
     imports: [
         BrowserModule,

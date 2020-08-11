@@ -56,9 +56,14 @@ export class UserEditComponent implements OnInit {
 
   ) {
     this.page_title = 'Ajustes de usuario';
-    this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = global.url;
+
+  }
+
+  ngOnInit(): void {
+
+    this.identity = this._userService.getIdentity();
 
     //Rellenar objeto usuario
     this.user = new User(
@@ -71,9 +76,6 @@ export class UserEditComponent implements OnInit {
         this.identity.description,
         this.identity.image
     );
-  }
-
-  ngOnInit(): void {
   }
 
   onSubmit(form){
@@ -109,6 +111,10 @@ export class UserEditComponent implements OnInit {
             delete this.identity.id;
 
             localStorage.setItem('identity', JSON.stringify(this.identity));
+
+            //Recarga porque no permanece en la misma vista
+            this.ngOnInit();
+
 
           }
           else{

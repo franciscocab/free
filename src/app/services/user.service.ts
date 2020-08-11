@@ -48,7 +48,7 @@ export class UserService {
         let params = 'json='+json;
 
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-                                       .set('Authorization', token);
+            .set('Authorization', token);
 
         return this._http.put(this.url+'user/update', params, {headers: headers})
 

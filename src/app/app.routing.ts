@@ -14,9 +14,11 @@ import { PostDetailComponent } from './components/post-detail/post-detail.compon
 import { PostEditComponent } from './components/post-edit/post-edit.component';
 import { CategoryDetailComponent } from './components/category-detail/category-detail.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { EmpresaNewComponent } from './components/empresa-new/empresa-new.component';
 
 //Agrega una proteccion a las rutas
 import { IdentityGuard } from './services/identity.guard';
+import {EmpresaDetailComponent} from './components/empresa-detail/empresa-detail.component';
 
 // Definir las rutas
 const appRoutes: Routes = [
@@ -32,7 +34,12 @@ const appRoutes: Routes = [
     { path: 'editar-entrada/:id', component: PostEditComponent, canActivate: [IdentityGuard] },
     { path: 'categoria/:id', component: CategoryDetailComponent },
     { path: 'perfil/:id', component: ProfileComponent },
+
+    { path: 'crear-empresa', component: EmpresaNewComponent, canActivate: [IdentityGuard] },
+    { path: 'empresa/:id', component: EmpresaDetailComponent, canActivate: [IdentityGuard] },
     { path: '**', component: ErrorComponent },
+
+
 ];
 
 // Exportar configuracion

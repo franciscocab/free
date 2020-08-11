@@ -24,15 +24,15 @@ export class HomeComponent implements OnInit {
     this.page_title = 'Inicio';
     this.url = global.url;
     this.identity = this._userService.getIdentity();
-    console.log(this.identity);
+
     this.token = this._userService.getToken();
   }
 
   ngOnInit(): void {
-    this.getPosts();
+    /*this.getPosts();*/
   }
 
-  getPosts(){
+  /*getPosts(){
     this._postService.getPosts().subscribe(
         response => {
           if(response.status == 'success'){
@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
           console.log(error);
         }
     )
-  }
+  }*/
 
 
 }
