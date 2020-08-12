@@ -48,10 +48,29 @@ export class EmpresaService {
 
     }
 
-    /*getPosts(id):Observable<any>{
+    getValores(id):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
-        return this._http.get(this.url + 'post/category/'+ id, {headers: headers});
-    }*/
+        return this._http.get(this.url + 'empresa/valor/'+ id, {headers: headers});
+    }
+
+    createValor(id, valor, token):Observable<any>{
+        let json = JSON.stringify(valor);
+        let params = "json="+json;
+
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+            .set('Authorization', token);
+
+        return this._http.post(this.url + 'empresa/valor/'+ id, params, {headers: headers});
+
+    }
+
+    deleteValor(token, id): Observable<any>{
+
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+            .set('Authorization', token);
+
+        return this._http.delete(this.url + 'empresa/valor/'+ id, {headers: headers});
+    }
 
 }

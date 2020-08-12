@@ -14,7 +14,7 @@
     </div>
 
     <!-- Formulario o datos de empresa -->
-    <form class="col-md-5 ml-0 pl-0" #empresaEditForm="ngForm" (ngSubmit)="onSubmit(empresaEditForm)">
+    <!--<form class="col-md-5 ml-0 pl-0" #empresaEditForm="ngForm" (ngSubmit)="onSubmit(empresaEditForm)">
 
         <div class="form-group">
             <label for="name">Nombre*</label>
@@ -33,13 +33,110 @@
 
         </div>
 
-
-
         <input type="submit" value="Guardar cambios" class="btn btn-danger"
                [disabled]="empresaEditForm.invalid"/>
 
+    </form>-->
+
+    <form  #empresaEditForm="ngForm" (ngSubmit)="onSubmit(empresaEditForm)">
+
+        <div class="col-md-5 ml-0 pl-0">
+
+            <div class="form-group">
+                <label for="name">Nombre*</label>
+                <input type="text" name="name" class="form-control" #name="ngModel"
+                       [(ngModel)]="empresa.name" required pattern="[a-zA-Z]+">
+
+                <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">
+                    El nombre no es válido
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="url">Url</label>
+                <input type="text" name="url" class="form-control" #url="ngModel"
+                       [(ngModel)]="empresa.url">
+
+            </div>
+        </div>
+
+        <input type="submit" value="Guardar cambios" class="btn btn-danger"
+               [disabled]="empresaEditForm.invalid"/>
     </form>
-    <br>
+
+    <!-- Tabla de valores de empresa -->
+    <div class="col-md-12 ml-0 pl-0 mt-5" *ngIf="valores">
+        <form  #valorForm="ngForm" (ngSubmit)="addValor(valorForm)">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Valor</th>
+                    <th>Valor en guaraníes</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>
+                        <input type="text" name="valor_name" class="form-control" #valor_name="ngModel"
+                         placeholder="Nombre" [(ngModel)]="valor.name" required>
+
+                        <small *ngIf="!valor_name.valid && valor_name.touched"
+                               class="invalid-feedback d-block">
+                            El nombre no es válido
+                        </small>
+                    </td>
+
+                    <td>
+                        <input type="text" name="valor_valor" class="form-control" #valor_valor="ngModel"
+                               placeholder="00000" [(ngModel)]="valor.valor" required pattern="[0-9.]*">
+
+                        <small *ngIf="!valor_valor.valid && valor_valor.touched"
+                               class="invalid-feedback d-block">
+                            El valor no es válido
+                        </small>
+                    </td>
+
+                    <td>
+                        <input type="text" name="valor_valor_guaranies" class="form-control" #valor_valor_guaranies="ngModel"
+                               placeholder="00000" [(ngModel)]="valor.valor_guaranies" required pattern="[0-9.]*">
+
+                        <small *ngIf="!valor_valor_guaranies.valid && valor_valor_guaranies.touched"
+                               class="invalid-feedback d-block">
+                            El valor no es válido
+                        </small>
+
+                    </td>
+
+                    <td>
+                        <input type="submit" value="Añadir" class="btn btn-success"
+                               [disabled]="valorForm.invalid"/>
+                    </td>
+                </tr>
+
+                <tr *ngFor="let valor of valores">
+                    <td>{{valor.name}}</td>
+                    <td>{{valor.valor}}</td>
+                    <td>{{valor.valor_guaranies}}</td>
+                    <td>
+                        <input (click)="deleteValor(valor.id)" type="button" value="Borrar"
+                               class="btn btn-danger"/>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </form>
+
+    </div>
+
+
+
+
+
+
 
 </div>
 
