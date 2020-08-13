@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Empresa } from '../models/empresa';
 import { global } from './global';
 
 @Injectable()
@@ -14,8 +13,8 @@ export class EmpresaService {
         this.url = global.url;
     }
 
-    create(token, category):Observable<any>{
-        let json = JSON.stringify(category);
+    create(token, empresa):Observable<any>{
+        let json = JSON.stringify(empresa);
         let params = "json="+json;
 
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
@@ -38,11 +37,12 @@ export class EmpresaService {
 
     }
 
-    update(id, empresa): Observable<any>{
+    update(id, empresa, token): Observable<any>{
         let json = JSON.stringify(empresa);
         let params = 'json='+json;
 
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+            .set('Authorization', token);
 
         return this._http.put(this.url+'empresa/'+ id, params, {headers: headers})
 

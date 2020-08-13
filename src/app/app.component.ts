@@ -2,40 +2,41 @@
 //DoCheck Permite cada tiempo realizar una actualizacion si hay un cambio
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { UserService } from './services/user.service';
-import { CategoryService } from './services/category.service';
 import { EmpresaService } from './services/empresa.service';
+import { MonedaService } from './services/moneda.service';
 import { global } from './services/global';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [UserService, CategoryService, EmpresaService]
+  providers: [UserService, EmpresaService, MonedaService]
 })
 export class AppComponent implements OnInit, DoCheck{
   public title = 'Free';
   public identity;
   public token;
   public url;
-  public categories;
   public empresas;
+  public monedas;
 
   constructor(
     private _userService: UserService,
-    private _categoryService: CategoryService,
-    private _empresaService: EmpresaService
+    private _empresaService: EmpresaService,
+    private _monedaService: MonedaService
   ){
     this.loadUser();
   }
 
   ngOnInit(): void {
-    /*this.getCategories();*/
     this.getEmpresas();
+    this.getMonedas();
   }
 
   ngDoCheck(): void {
     this.loadUser();
     this.url = global.url;
+
   }
 
   loadUser(){
@@ -57,18 +58,17 @@ export class AppComponent implements OnInit, DoCheck{
     )
   }
 
-  /*getCategories(){
-    this._categoryService.getCategories().subscribe(
+  getMonedas(){
+    this._monedaService.getMonedas().subscribe(
         response => {
           if(response.status == 'success'){
-            this.categories = response.categories;
-
+            this.monedas = response.monedas;
           }
         },
         error => {
           console.log('error');
         }
     )
-  }*/
+  }
 
 }

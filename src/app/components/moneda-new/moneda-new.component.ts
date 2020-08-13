@@ -1,42 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { EmpresaService } from '../../services/empresa.service';
-import { Empresa } from '../../models/empresa';
+import { MonedaService } from '../../services/moneda.service';
+import { Moneda } from '../../models/moneda';
 
 @Component({
-  selector: 'app-empresa-new',
-  templateUrl: './empresa-new.component.html',
-  styleUrls: ['./empresa-new.component.css'],
-  providers: [UserService, EmpresaService]
+  selector: 'app-moneda-new',
+  templateUrl: './moneda-new.component.html',
+  styleUrls: ['./moneda-new.component.css'],
+  providers: [UserService, MonedaService]
 })
-export class EmpresaNewComponent implements OnInit {
+export class MonedaNewComponent implements OnInit {
   public page_title: string;
   public identity;
   public token;
   public status: string;
-  public empresa: Empresa;
+  public moneda: Moneda;
+  public is_edit: boolean;
 
   constructor(
       private _route: ActivatedRoute,
       private _router: Router,
       private _userService: UserService,
-      private _empresaService: EmpresaService
+      private _monedaService: MonedaService
   ) {
-    this.page_title = "Crear nueva empresa";
+    this.page_title = "Crear nueva moneda";
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.empresa = new Empresa(1,'','');
+    this.moneda = new Moneda(1,'','','');
+
   }
 
   ngOnInit(): void {
   }
 
   onSubmit(form){
-    this._empresaService.create(this.token, this.empresa).subscribe(
+    this._monedaService.create(this.token, this.moneda).subscribe(
         response => {
           if(response.status == 'success'){
-            this.empresa = response.empresa;
+            this.moneda = response.moneda;
             this.status = 'success';
             form.reset();
           }

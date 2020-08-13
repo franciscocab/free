@@ -1,0 +1,62 @@
+<div class="col-md-12 mt-3">
+    <h1>{{page_title}}</h1>
+    <hr/>
+
+    <div class="alert alert-success col-md-5 mt-3" *ngIf="status== 'success'">
+        La moneda se ha creado correctamente.
+    </div>
+
+    <div class="alert alert-danger col-md-5 mt-3" *ngIf="status== 'error'">
+        La moneda no se ha guardado.
+    </div>
+
+    <!-- Formulario crear moneda-->
+    <form #monedaForm="ngForm" (ngSubmit)="onSubmit(monedaForm)" class="col-md-5">
+        <div class="form-group">
+            <label for="name">Nombre*</label>
+            <input type="text" name="name" class="form-control" #name=ngModel
+                   [(ngModel)]="moneda.name" required />
+
+            <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">
+                El nombre de la moneda no es válida
+            </small>
+
+        </div>
+
+        <div class="form-group">
+            <label for="symbol">Símbolo*</label>
+            <input type="text" name="symbol" class="form-control" #symbol=ngModel
+                   [(ngModel)]="moneda.symbol" required />
+
+            <small *ngIf="!symbol.valid && symbol.touched" class="invalid-feedback d-block">
+                El símbolo de la moneda no es válida
+            </small>
+
+        </div>
+
+        <div class="form-group">
+            <label for="valor_guaranies">Valor*</label>
+            <input type="text" name="valor_guaranies" class="form-control" #valor_guaranies=ngModel
+                   [(ngModel)]="moneda.valor_guaranies" required />
+
+            <small *ngIf="!valor_guaranies.valid && valor_guaranies.touched" class="invalid-feedback d-block">
+                El valor de la moneda no es válida
+            </small>
+
+        </div>
+
+
+        <input type="submit" value="Guardar" class="btn btn-success"
+               [disabled]="monedaForm.invalid">
+
+    </form>
+
+
+    <br>
+
+</div>
+
+
+
+
+

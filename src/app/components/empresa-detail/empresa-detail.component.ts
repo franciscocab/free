@@ -4,13 +4,14 @@ import { Empresa } from '../../models/empresa';
 import { Valor } from '../../models/valor';
 import { EmpresaService } from '../../services/empresa.service';
 import { UserService } from '../../services/user.service';
+import { MonedaService } from '../../services/moneda.service';
 import { global } from '../../services/global';
 
 @Component({
   selector: 'app-empresa-detail',
   templateUrl: './empresa-detail.component.html',
   styleUrls: ['./empresa-detail.component.css'],
-  providers: [EmpresaService, UserService]
+  providers: [EmpresaService, UserService, MonedaService]
 })
 export class EmpresaDetailComponent implements OnInit {
   public empresa: Empresa;
@@ -20,16 +21,18 @@ export class EmpresaDetailComponent implements OnInit {
   public token;
   public valor: Valor;
   public empresaId;
+  public monedas;
 
   constructor(
       private _router: Router,
       private _route: ActivatedRoute,
       private _empresaService: EmpresaService,
-      private _userService: UserService
+      private _userService: UserService,
+      private _monedaService: MonedaService
   ) {
     this.url = global.url;
     this.token = this._userService.getToken();
-    this.valor = new Valor(null,null,'','','');
+    this.valor = new Valor(null,null,1,'','','');
   }
 
   ngOnInit() {
@@ -40,39 +43,35 @@ export class EmpresaDetailComponent implements OnInit {
           this.getValores();
       });
 
+      this.getMonedas();
 
   }
 
   getEmpresa(){
-      //Toma id de la empresa por parametro
-      /*this._route.params.subscribe(params => {
-          this.empresaId = +params['id'];*/
 
-          this._empresaService.getEmpresa(this.empresaId).subscribe(
-              response => {
-                  if(response.status == 'success'){
-                      this.empresa = response.empresa;
+      this._empresaService.getEmpresa(this.empresaId).subscribe(
+          response => {
+              if(response.status == 'success'){
+                  this.empresa = response.empresa;
 
-                      //Se vacia status para que no salga el mensaje de actualizacion de arriba al cambiar
-                      //de pagina
-                      this.status = '';
+                  //Se vacia status para que no salga el mensaje de actualizacion de arriba al cambiar
+                  //de pagina
+                  this.status = '';
 
-                  }
-                  else{
-                      this._router.navigate(['/inicio']);
-                  }
-              },
-              error => {
-                  console.log(error);
               }
-          );
-      /*});*/
-
+              else{
+                  this._router.navigate(['/inicio']);
+              }
+          },
+          error => {
+              console.log(error);
+          }
+      );
   }
 
   onSubmit(form){
 
-      this._empresaService.update(this.empresaId, this.empresa).subscribe(
+      this._empresaService.update(this.empresaId, this.empresa, this.token).subscribe(
           response => {
             if(response && response.status){
               this.status = 'success';
@@ -88,8 +87,20 @@ export class EmpresaDetailComponent implements OnInit {
           }
       );
 
-
   }
+
+    getMonedas(){
+        this._monedaService.getMonedas().subscribe(
+            response => {
+                if(response.status == 'success'){
+                    this.monedas = response.monedas;
+                }
+            } ,
+            error => {
+                console.log(error);
+            }
+        );
+    }
 
   getValores(){
       this._empresaService.getValores(this.empresaId).subscribe(

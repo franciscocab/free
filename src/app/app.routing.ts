@@ -19,6 +19,8 @@ import { EmpresaNewComponent } from './components/empresa-new/empresa-new.compon
 //Agrega una proteccion a las rutas
 import { IdentityGuard } from './services/identity.guard';
 import {EmpresaDetailComponent} from './components/empresa-detail/empresa-detail.component';
+import {MonedaNewComponent} from './components/moneda-new/moneda-new.component';
+import {MonedaDetailComponent} from './components/moneda-detail/moneda-detail.component';
 
 // Definir las rutas
 const appRoutes: Routes = [
@@ -37,6 +39,8 @@ const appRoutes: Routes = [
 
     { path: 'crear-empresa', component: EmpresaNewComponent, canActivate: [IdentityGuard] },
     { path: 'empresa/:id', component: EmpresaDetailComponent, canActivate: [IdentityGuard] },
+    { path: 'crear-moneda', component: MonedaNewComponent, canActivate: [IdentityGuard] },
+    { path: 'moneda/:id', component: MonedaDetailComponent },
     { path: '**', component: ErrorComponent },
 
 

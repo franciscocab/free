@@ -24,6 +24,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { EmpresaNewComponent } from './components/empresa-new/empresa-new.component';
 import { EmpresaDetailComponent } from './components/empresa-detail/empresa-detail.component';
+import { MonedaNewComponent } from './components/moneda-new/moneda-new.component';
+import { MonedaDetailComponent } from './components/moneda-detail/moneda-detail.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { EmpresaDetailComponent } from './components/empresa-detail/empresa-deta
       ProfileComponent,
       PostListComponent,
       EmpresaNewComponent,
-      EmpresaDetailComponent
+      EmpresaDetailComponent,
+      MonedaNewComponent,
+      MonedaDetailComponent
   ],
     imports: [
         BrowserModule,
