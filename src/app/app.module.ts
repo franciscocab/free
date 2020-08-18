@@ -6,6 +6,8 @@ import { routing, appRoutingProviders } from './app.routing';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { AngularFileUploaderModule } from "angular-file-uploader";
 
+import { NgxPaginationModule } from 'ngx-pagination';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -60,7 +62,8 @@ import { RecargaDetailComponent } from './components/recarga-detail/recarga-deta
         HttpClientModule,
         FroalaEditorModule.forRoot(),
         FroalaViewModule.forRoot(),
-        AngularFileUploaderModule
+        AngularFileUploaderModule,
+        NgxPaginationModule
     ],
   providers: [
       appRoutingProviders,

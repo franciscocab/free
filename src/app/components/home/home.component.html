@@ -1,22 +1,59 @@
-<div class="loading" *ngIf="!page_title">
+<div class="loading" *ngIf="!recargas">
     Cargando...
 </div>
 
-<div class="container-fluid mt-3" *ngIf="page_title">
+<div class="col-md-12 mt-3" *ngIf="recargas">
     <h1>{{page_title}}</h1>
-    <hr>
+
+    <!-- Tabla de recargas-->
+    <div class="col-md-12 ml-0 pl-0">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Empresa</th>
+                <th>Valor</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr *ngFor="let recarga of recargas | paginate: config"
+                [routerLink]="['/recarga',recarga.id]" role="button">
+                <td>{{recarga.created_at |  date:'dd/M/y h:mm a'}}</td>
+                <td>{{recarga.client}}</td>
+                <td>{{recarga.empresa.name}}</td>
+                <td>{{recarga.valor.name}}</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <pagination-controls
+                [maxSize]="maxSize"
+                [directionLinks]="directionLinks"
+                [autoHide]="autoHide"
+                [responsive]="responsive"
+                [previousLabel]="labels.previousLabel"
+                [nextLabel]="labels.nextLabel"
+                [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                (pageChange)="pageChanged($event)">
+
+        </pagination-controls>
+
+    </div>
+
+</div>
 
 
-
-
-
-
-
-    <!-- LISTADO DE ENTRADAS -->
+<!-- LISTADO DE ENTRADAS -->
     <!--<post-list [posts]="posts"
                [identity]="identity"
                [url] = "url">
     </post-list>-->
 
 
-</div>
+
