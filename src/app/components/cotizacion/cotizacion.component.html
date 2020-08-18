@@ -1,0 +1,40 @@
+<div class="col-md-12 mt-3">
+    <h1>{{page_title}}</h1>
+    <p>
+        Cotización de monedas del día.
+    </p>
+
+    <!-- Tabla de cotizaciones -->
+    <div class="col-md-12 ml-0 pl-0" *ngIf="monedas">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Moneda</th>
+                <th>Compra</th>
+                <th>Venta</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr *ngFor="let moneda of monedas">
+                <td>{{moneda.name}}</td>
+                <td>{{moneda.compra}}</td>
+                <td>{{moneda.venta}}</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+
+
+    </div>
+
+
+
+
+
+</div>
+
+
+

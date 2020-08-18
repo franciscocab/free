@@ -1,0 +1,73 @@
+<div class="col-md-12 mt-3" *ngIf="recarga">
+    <h1>{{page_title}}</h1>
+    <hr/>
+
+    <div class="alert alert-success col-md-5 mt-3" *ngIf="status== 'success'">
+        La carga fue exitosa.
+    </div>
+
+    <div class="alert alert-danger col-md-5 mt-3" *ngIf="status== 'error'">
+        La carga no fue realizada.
+    </div>
+
+
+    <!-- Formulario nueva carga-->
+    <form #cargaForm="ngForm" (ngSubmit)="onSubmit(cargaForm)" class="col-md-5">
+        <div class="form-group">
+            <label for="client">Cliente*</label>
+            <input type="text" name="client" class="form-control" #client=ngModel
+                   [(ngModel)]="recarga.client" required />
+
+            <small *ngIf="!client.valid && client.touched" class="invalid-feedback d-block">
+                El cliente no es válido
+            </small>
+
+
+        </div>
+
+        <div class="form-group">
+            <label for="empresa_id">Empresa*</label>
+            <select (change)="getValores($event.target.value)"  id="empresa_id" name="empresa_id" #empresa="ngModel" [(ngModel)]="recarga.empresa_id"
+                    class="form-control" required>
+                <option *ngFor="let empresa of empresas" value="{{empresa.id}}">
+                    {{empresa.name}}
+                </option>
+            </select>
+
+            <small *ngIf="!empresa.valid && empresa.touched" class="invalid-feedback d-block">
+                La empresa no es válida
+            </small>
+
+
+        </div>
+
+        <div class="form-group">
+            <label for="valor_id">Valor*</label>
+            <select id="valor_id"  name="valor_id" #val="ngModel" [(ngModel)]="recarga.valor_id"
+                    class="form-control" required="required">
+                <option *ngFor="let valor of valores" value="{{valor.id}}">
+                    {{valor.name}}
+                </option>
+            </select>
+
+            <small *ngIf="!val.valid && val.touched" class="invalid-feedback d-block">
+                El valor no es válido
+            </small>
+
+        </div>
+
+
+
+        <input *ngIf="empresas" type="submit" value="Realizar recarga" class="btn btn-danger">
+
+    </form>
+
+
+    <br>
+
+</div>
+
+
+
+
+

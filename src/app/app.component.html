@@ -29,7 +29,7 @@
         </li>
 
 
-        <li class="nav-item dropdown">
+        <!--<li class="nav-item dropdown">
           <a  class="nav-link dropdown-toggle" href="#" id="navbarDropdown-2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Monedas
           </a>
@@ -37,6 +37,10 @@
             <a *ngFor="let moneda of monedas" class="dropdown-item"
                [routerLink]="['/moneda',moneda.id]">{{moneda.name}}</a>
           </div>
+        </li>-->
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/cotizacion']">Cotizaciones</a>
         </li>
 
         <li class="nav-item">
@@ -66,8 +70,8 @@
            {{identity.name + ' ' + identity.surname}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown-1">
+            <a class="dropdown-item" [routerLink]="['/nueva-recarga']">Recargar</a>
             <a class="dropdown-item" [routerLink]="['/crear-empresa']">Crear empresa</a>
-            <a class="dropdown-item" [routerLink]="['/crear-moneda']">Crear moneda</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" [routerLink]="['/ajustes']">Mi perfil</a>
             <a class="dropdown-item" [routerLink]="['/logout/1']">Salir</a>

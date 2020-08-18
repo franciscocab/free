@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { global } from './global';
 
 @Injectable()
-export class MonedaService {
+export class RecargaService {
     public url: string;
 
     constructor(
@@ -13,51 +13,43 @@ export class MonedaService {
         this.url = global.url;
     }
 
-    create(token, moneda):Observable<any>{
-        let json = JSON.stringify(moneda);
+    create(token, recarga):Observable<any>{
+        let json = JSON.stringify(recarga);
         let params = "json="+json;
 
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
             .set('Authorization', token);
 
-        return this._http.post(this.url + 'moneda', params, {headers: headers});
+        return this._http.post(this.url + 'recarga', params, {headers: headers});
 
     }
 
-    getMoneda(id):Observable<any>{
+    getRecarga(id):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.get(this.url + 'moneda/'+ id, {headers: headers});
+        return this._http.get(this.url + 'recarga/'+ id, {headers: headers});
 
     }
 
-    update(id, moneda, token): Observable<any>{
-        let json = JSON.stringify(moneda);
+    update(id, recarga, token): Observable<any>{
+        let json = JSON.stringify(recarga);
         let params = 'json='+json;
 
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
             .set('Authorization', token);
 
-        return this._http.put(this.url+'moneda/'+ id, params, {headers: headers})
+        return this._http.put(this.url+'recarga/'+ id, params, {headers: headers})
     }
 
-
-
-    ////
-
-    getMonedas():Observable<any>{
+    getRecargas(token):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+            .set('Authorization', token);
 
-        return this._http.get(this.url + 'cotizaciones', {headers: headers});
-
-    }
-
-
-    getCotizacion():Observable<any>{
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-
-        return this._http.get(this.url + 'cotizaciones/update', {headers: headers});
+        return this._http.get(this.url + 'recarga', {headers: headers});
 
     }
+
+
+
 
 
 }

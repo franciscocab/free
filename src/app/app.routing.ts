@@ -21,11 +21,14 @@ import { IdentityGuard } from './services/identity.guard';
 import {EmpresaDetailComponent} from './components/empresa-detail/empresa-detail.component';
 import {MonedaNewComponent} from './components/moneda-new/moneda-new.component';
 import {MonedaDetailComponent} from './components/moneda-detail/moneda-detail.component';
+import {CotizacionComponent} from './components/cotizacion/cotizacion.component';
+import {RecargaNewComponent} from './components/recarga-new/recarga-new.component';
+import {RecargaDetailComponent} from './components/recarga-detail/recarga-detail.component';
 
 // Definir las rutas
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent },
-    { path: 'inicio', component: HomeComponent },
+    { path: '', component: HomeComponent , canActivate: [IdentityGuard]},
+    { path: 'inicio', component: HomeComponent, canActivate: [IdentityGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'logout/:sure', component: LoginComponent },
     { path: 'registro', component: RegisterComponent },
@@ -35,12 +38,14 @@ const appRoutes: Routes = [
     { path: 'entrada/:id', component: PostDetailComponent },
     { path: 'editar-entrada/:id', component: PostEditComponent, canActivate: [IdentityGuard] },
     { path: 'categoria/:id', component: CategoryDetailComponent },
-    { path: 'perfil/:id', component: ProfileComponent },
+    { path: 'perfil/:id', component: ProfileComponent, canActivate: [IdentityGuard] },
 
     { path: 'crear-empresa', component: EmpresaNewComponent, canActivate: [IdentityGuard] },
     { path: 'empresa/:id', component: EmpresaDetailComponent, canActivate: [IdentityGuard] },
-    { path: 'crear-moneda', component: MonedaNewComponent, canActivate: [IdentityGuard] },
-    { path: 'moneda/:id', component: MonedaDetailComponent },
+    { path: 'cotizacion', component: CotizacionComponent},
+    { path: 'nueva-recarga', component: RecargaNewComponent, canActivate: [IdentityGuard] },
+    { path: 'recarga/:id', component: RecargaDetailComponent, canActivate: [IdentityGuard] },
+
     { path: '**', component: ErrorComponent },
 
 

@@ -26,6 +26,9 @@ import { EmpresaNewComponent } from './components/empresa-new/empresa-new.compon
 import { EmpresaDetailComponent } from './components/empresa-detail/empresa-detail.component';
 import { MonedaNewComponent } from './components/moneda-new/moneda-new.component';
 import { MonedaDetailComponent } from './components/moneda-detail/moneda-detail.component';
+import { CotizacionComponent } from './components/cotizacion/cotizacion.component';
+import { RecargaNewComponent } from './components/recarga-new/recarga-new.component';
+import { RecargaDetailComponent } from './components/recarga-detail/recarga-detail.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { MonedaDetailComponent } from './components/moneda-detail/moneda-detail.
       EmpresaNewComponent,
       EmpresaDetailComponent,
       MonedaNewComponent,
-      MonedaDetailComponent
+      MonedaDetailComponent,
+      CotizacionComponent,
+      RecargaNewComponent,
+      RecargaDetailComponent
   ],
     imports: [
         BrowserModule,

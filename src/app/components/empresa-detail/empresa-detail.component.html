@@ -47,9 +47,9 @@
                 <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>Valor</th>
+                    <th>Valor (moneda)</th>
                     <th>Moneda</th>
-                    <th>Valor en guaraníes</th>
+                    <th>Valor para venta (Gs.)</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
@@ -77,10 +77,10 @@
                     </td>
 
                     <td  class="form-group">
-                        <select name="moneda_id" #moneda="ngModel" [(ngModel)]="valor.empresa_id"
+                        <select name="moneda_id" #moneda="ngModel" [(ngModel)]="valor.moneda_id"
                                 class="form-control" required>
                             <option *ngFor="let moneda of monedas" value="{{moneda.id}}">
-                                {{moneda.symbol}}
+                                {{moneda.name}}
                             </option>
                         </select>
 
@@ -108,7 +108,7 @@
                 <tr *ngFor="let valor of valores">
                     <td>{{valor.name}}</td>
                     <td>{{valor.valor}}</td>
-                    <td>{{valor.moneda.symbol}}</td>
+                    <td>{{valor.moneda.name}}</td>
                     <td>{{valor.valor_guaranies}}</td>
                     <td>
                         <input (click)="deleteValor(valor.id)" type="button" value="Borrar"
