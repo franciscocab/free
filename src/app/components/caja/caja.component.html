@@ -1,19 +1,18 @@
-<div class="loading" *ngIf="!recargas">
+<div class="loading" *ngIf="!caja">
     Cargando...
 </div>
 
-<div class="col-md-12 mt-3" *ngIf="recargas">
+<div class="col-md-12 mt-3" *ngIf="caja">
     <h1>{{page_title}}</h1>
 
-    <!-- Tabla de recargas-->
-    <div class="col-md-12 ml-0 pl-0">
+    <!-- Tabla de Movimientos-->
+    <!--<div class="col-md-12 ml-0 pl-0">
         <table class="table table-hover">
             <thead>
             <tr>
                 <th>Fecha</th>
-                <th>Cliente</th>
-                <th>Empresa</th>
-                <th>Valor</th>
+                <th>Tipo</th>
+                <th>Monto</th>
             </tr>
             </thead>
 
@@ -44,16 +43,12 @@
 
         </pagination-controls>
 
-    </div>
+    </div>-->
 
 </div>
 
 
-<!-- LISTADO DE ENTRADAS -->
-    <!--<post-list [posts]="posts"
-               [identity]="identity"
-               [url] = "url">
-    </post-list>-->
+
 
 
 

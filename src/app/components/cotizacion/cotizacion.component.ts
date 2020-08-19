@@ -25,7 +25,7 @@ export class CotizacionComponent implements OnInit {
   }
 
   getCotizacion(){
-    this._monedaService.getCotizacion().subscribe(
+    this._monedaService.updateCotizacion().subscribe(
         response => {
             this.getMonedas();
         },

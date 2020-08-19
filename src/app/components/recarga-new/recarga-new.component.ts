@@ -32,26 +32,14 @@ export class RecargaNewComponent implements OnInit {
     this.page_title = 'Recargar';
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.recarga = new Recarga(null, this.identity.sub,null,null,'');
+    this.recarga = new Recarga(null, this.identity.sub,null,null,
+        '','');
 
   }
 
 
   ngOnInit(): void {
-    this.getCotizacion();
     this.getEmpresas();
-
-  }
-
-  //Recibe la cotizacion del momento
-  getCotizacion(){
-    this._monedaService.getCotizacion().subscribe(
-        response => {
-        },
-        error => {
-          console.log('error');
-        }
-    )
   }
 
   getEmpresas(){
@@ -68,11 +56,9 @@ export class RecargaNewComponent implements OnInit {
   }
 
   getValores(id){
-
       this._empresaService.getValores(id).subscribe(
           response => {
               this.valores = response.valores;
-
               if(this.valores.length == 0){
                   this.recarga.valor_id = null;
               }
@@ -87,22 +73,38 @@ export class RecargaNewComponent implements OnInit {
 
 
   onSubmit(form){
-      if(this.recarga.client && this.recarga.empresa_id && this.recarga.valor_id){
+      if(this.recarga.client && this.recarga.empresa_id && this.recarga.valor_id) {
 
-          this._recargaService.create(this.token, this.recarga).subscribe(
+          this._empresaService.getValor(this.recarga.valor_id).subscribe(
               response => {
-                  if(response.status == 'success'){
-                      this.recarga = response.recarga;
-                      this.status = 'success';
-                      form.reset();
-                  }
-                  else{
-                      this.status = 'error';
-                  }
-              },
+                  let valor = response.valor;
+
+                  this._monedaService.updateCotizacion().subscribe(
+                      response => {
+
+                          this._monedaService.getMoneda(valor.moneda_id).subscribe(
+                              response => {
+                                  if (response.status == 'success') {
+                                      this.recarga.valor_cotizacion = response.moneda.venta;
+                                      this.saveRecarga(form);
+
+                                  }
+                              },
+                              error => {
+                                  console.log('error');
+                              }
+                          )
+
+                      },
+                      error => {
+                          console.log('error');
+                      }
+                  )
+
+
+              } ,
               error => {
-                  this.status = 'error';
-                  console.log(<any>error);
+                  console.log(error);
               }
           );
       }
@@ -111,6 +113,27 @@ export class RecargaNewComponent implements OnInit {
       }
 
   }
+
+    //Guarda la recarga
+    saveRecarga(form) {
+        this._recargaService.create(this.token, this.recarga).subscribe(
+            response => {
+                if(response.status == 'success'){
+                    this.recarga = response.recarga;
+                    this.status = 'success';
+                    form.reset();
+                }
+                else{
+                    this.status = 'error';
+                }
+            },
+            error => {
+                this.status = 'error';
+                console.log(<any>error);
+            }
+        );
+    }
+
 
 
 

@@ -31,6 +31,7 @@ import { MonedaDetailComponent } from './components/moneda-detail/moneda-detail.
 import { CotizacionComponent } from './components/cotizacion/cotizacion.component';
 import { RecargaNewComponent } from './components/recarga-new/recarga-new.component';
 import { RecargaDetailComponent } from './components/recarga-detail/recarga-detail.component';
+import { CajaComponent } from './components/caja/caja.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { RecargaDetailComponent } from './components/recarga-detail/recarga-deta
       MonedaDetailComponent,
       CotizacionComponent,
       RecargaNewComponent,
-      RecargaDetailComponent
+      RecargaDetailComponent,
+      CajaComponent
   ],
     imports: [
         BrowserModule,

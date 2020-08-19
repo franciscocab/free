@@ -16,10 +16,10 @@
             <label>Cliente: {{recarga.client}}</label>
         </div>
         <div class="form-group">
-            <label>Empresa: {{recarga.empresa.name}}</label>
+            <label *ngIf="recarga.empresa">Empresa: {{recarga.empresa.name}}</label>
         </div>
         <div class="form-group">
-            <label>Valor: {{recarga.valor.name}}</label>
+            <label *ngIf="recarga.valor">Valor: {{recarga.valor.name}}</label>
         </div>
 
 

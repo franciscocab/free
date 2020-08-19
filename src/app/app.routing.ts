@@ -24,6 +24,7 @@ import {MonedaDetailComponent} from './components/moneda-detail/moneda-detail.co
 import {CotizacionComponent} from './components/cotizacion/cotizacion.component';
 import {RecargaNewComponent} from './components/recarga-new/recarga-new.component';
 import {RecargaDetailComponent} from './components/recarga-detail/recarga-detail.component';
+import {CajaComponent} from './components/caja/caja.component';
 
 // Definir las rutas
 const appRoutes: Routes = [
@@ -45,6 +46,7 @@ const appRoutes: Routes = [
     { path: 'cotizacion', component: CotizacionComponent},
     { path: 'nueva-recarga', component: RecargaNewComponent, canActivate: [IdentityGuard] },
     { path: 'recarga/:id', component: RecargaDetailComponent, canActivate: [IdentityGuard] },
+    { path: 'caja', component: CajaComponent, canActivate: [IdentityGuard] },
 
     { path: '**', component: ErrorComponent },
 

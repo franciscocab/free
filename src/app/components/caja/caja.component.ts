@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { CajaService } from '../../services/caja.service';
 import { UserService } from '../../services/user.service';
 import { global } from '../../services/global';
-import { RecargaService } from '../../services/recarga.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
-  providers: [UserService, RecargaService]
+  selector: 'app-caja',
+  templateUrl: './caja.component.html',
+  styleUrls: ['./caja.component.css'],
+  providers: [CajaService, UserService]
 })
-export class HomeComponent implements OnInit {
+export class CajaComponent implements OnInit {
   public page_title: string;
   public url;
   public identity;
   public token;
-  public recargas;
+  public caja;
+
 
   //Configuracion de paginacion
   public maxSize: number = 7;
@@ -32,35 +33,35 @@ export class HomeComponent implements OnInit {
 
   constructor(
       private _userService: UserService,
-      private _recargaService: RecargaService
+      private _cajaService: CajaService
   ) {
-    this.page_title = 'Recargas';
+    this.page_title = 'Caja';
     this.url = global.url;
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-
   }
 
   ngOnInit(): void {
-    this.getRecargas();
-
+    this.getCaja();
   }
 
-  pageChanged(event){
+  /*pageChanged(event){
     this.config.currentPage = event;
-  }
+  }*/
 
-  getRecargas(){
-    this._recargaService.getRecargas(this.token).subscribe(
+  //Va en getMovimientos
+  /*this.config = {
+    itemsPerPage: 15,
+    currentPage: 1,
+    totalItems: this.recargas.length
+  };*/
+
+
+  getCaja(){
+    this._cajaService.getCaja(this.token).subscribe(
         response => {
           if(response.status == 'success'){
-            this.recargas = response.recargas;
-
-            this.config = {
-              itemsPerPage: 15,
-              currentPage: 1,
-              totalItems: this.recargas.length
-            };
+            this.caja = response.caja;
 
           }
         },
@@ -69,8 +70,4 @@ export class HomeComponent implements OnInit {
         }
     )
   }
-
-
-
-
 }

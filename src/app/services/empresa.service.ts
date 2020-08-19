@@ -51,7 +51,7 @@ export class EmpresaService {
     getValores(id):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
-        return this._http.get(this.url + 'empresa/valor/'+ id, {headers: headers});
+        return this._http.get(this.url + 'empresa/valores/'+ id, {headers: headers});
     }
 
     createValor(id, valor, token):Observable<any>{
@@ -71,6 +71,12 @@ export class EmpresaService {
             .set('Authorization', token);
 
         return this._http.delete(this.url + 'empresa/valor/'+ id, {headers: headers});
+    }
+
+    getValor(id):Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.get(this.url + 'empresa/valor/'+ id, {headers: headers});
     }
 
 }

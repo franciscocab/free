@@ -4,6 +4,7 @@ export class Recarga{
         public user_id: number,
         public valor_id: number,
         public empresa_id: number,
-        public client: string
+        public client: string,
+        public valor_cotizacion: string
     ){}
 }
