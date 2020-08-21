@@ -3,27 +3,109 @@
 </div>
 
 <div class="col-md-12 mt-3" *ngIf="caja">
-    <h1>{{page_title}}</h1>
+    <div class="d-flex justify-content-between">
+        <div>
+            <h1>
+                {{page_title}} {{caja.estado}}
+            </h1>
+        </div>
+
+        <div *ngIf="caja.estado == 'Cerrada'">
+            <button (click)="abrirCaja()" type="button" class="btn btn-danger btn-lg" value="Abrir caja">
+                Abrir caja
+            </button>
+        </div>
+
+        <div *ngIf="caja.estado == 'Abierta'">
+            <button (click)="cerrarCaja()" type="button" class="btn btn-danger btn-lg" value="Abrir caja">
+                Cerrar caja
+            </button>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- Datos de caja -->
+    <div class="col-md-6 ml-0 pl-0">
+        <div class="form-row">
+            <div class="col">
+                <h5>Apertura: {{caja.monto_apertura}}</h5>
+            </div>
+            <div class="col">
+                <h5>Cierre: {{caja.monto_cierre}}</h5>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <form class="mt-3" *ngIf="movimiento && caja.estado == 'Abierta'" #movimientoForm="ngForm" (ngSubmit)="onSubmit(movimientoForm)">
+        <div class="form-row">
+            <div class="col">
+
+                <select name="tipo" #tipo="ngModel" [(ngModel)]="movimiento.tipo"
+                        class="form-control">
+                    <option *ngFor="let tipo of tipos" [value]="tipo">
+                        {{tipo}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="col">
+                <input type="text" name="descripcion" class="form-control" #descripcion="ngModel"
+                       placeholder="Descripción" [(ngModel)]="movimiento.description">
+            </div>
+
+
+            <div class="col">
+                <input type="text" name="valor" class="form-control" #valor="ngModel"
+                       placeholder="Valor de movimiento" [(ngModel)]="movimiento.valor"
+                       required pattern="[0-9.]*">
+
+                    <small *ngIf="!valor.valid && valor.touched"
+                           class="invalid-feedback d-block">
+                        El valor no es válido
+                    </small>
+
+            </div>
+
+
+
+            <div class="col">
+                <input type="submit" value="Guardar Movimiento" class="btn btn-danger"
+                       [disabled]="movimientoForm.invalid"/>
+            </div>
+
+
+        </div>
+    </form>
+
+
 
     <!-- Tabla de Movimientos-->
-    <!--<div class="col-md-12 ml-0 pl-0">
+    <div class="col-md-12 ml-0 pl-0 mt-5">
+        <div class="form-group">
+            <h3>Movimientos de caja</h3>
+        </div>
         <table class="table table-hover">
             <thead>
             <tr>
                 <th>Fecha</th>
                 <th>Tipo</th>
+                <th>Descripción</th>
                 <th>Monto</th>
             </tr>
             </thead>
 
-            <tbody>
+            <tbody *ngIf="movimientos">
 
-            <tr *ngFor="let recarga of recargas | paginate: config"
-                [routerLink]="['/recarga',recarga.id]" role="button">
-                <td>{{recarga.created_at |  date:'dd/M/y h:mm a'}}</td>
-                <td>{{recarga.client}}</td>
-                <td *ngIf="recarga.empresa">{{recarga.empresa.name}}</td>
-                <td *ngIf="recarga.valor">{{recarga.valor.name}}</td>
+            <tr *ngFor="let movimiento of movimientos | paginate: config"
+                [routerLink]="['/movimiento',movimiento.id]" role="button">
+                <td>{{movimiento.created_at |  date:'dd/M/y h:mm a'}}</td>
+                <td>{{movimiento.tipo}}</td>
+                <td>{{movimiento.description}}</td>
+                <td>{{movimiento.valor}}</td>
+
             </tr>
 
             </tbody>
@@ -43,7 +125,7 @@
 
         </pagination-controls>
 
-    </div>-->
+    </div>
 
 </div>
 

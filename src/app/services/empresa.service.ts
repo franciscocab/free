@@ -25,7 +25,7 @@ export class EmpresaService {
     }
 
     getEmpresas():Observable<any>{
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
         return this._http.get(this.url + 'empresa', {headers: headers});
 

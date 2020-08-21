@@ -5,6 +5,7 @@ export class Recarga{
         public valor_id: number,
         public empresa_id: number,
         public client: string,
-        public valor_cotizacion: string
+        public valor_cotizacion: string,
+        public movimiento_id: number
     ){}
 }

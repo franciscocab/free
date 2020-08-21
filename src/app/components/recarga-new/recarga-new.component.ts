@@ -4,13 +4,15 @@ import { UserService } from '../../services/user.service';
 import { RecargaService } from '../../services/recarga.service';
 import { MonedaService } from '../../services/moneda.service';
 import { EmpresaService } from '../../services/empresa.service';
-import { Recarga } from '../../models/Recarga';
+import { CajaService } from '../../services/caja.service';
+import { Recarga } from '../../models/recarga';
+import { Movimiento } from '../../models/movimiento';
 
 @Component({
   selector: 'app-recarga-new',
   templateUrl: './recarga-new.component.html',
   styleUrls: ['./recarga-new.component.css'],
-  providers: [UserService, RecargaService, MonedaService, EmpresaService]
+  providers: [UserService, RecargaService, MonedaService, EmpresaService, CajaService]
 })
 export class RecargaNewComponent implements OnInit {
   public page_title: string;
@@ -19,7 +21,10 @@ export class RecargaNewComponent implements OnInit {
   public status: string;
   public recarga: Recarga;
   public empresas;
-  public valores = '';
+  public valores;
+  public caja;
+  public movimiento: Movimiento;
+  public valor;
 
   constructor(
       private _router: Router,
@@ -27,13 +32,17 @@ export class RecargaNewComponent implements OnInit {
       private _userService: UserService,
       private _recargaService: RecargaService,
       private _monedaService: MonedaService,
-      private _empresaService: EmpresaService
+      private _empresaService: EmpresaService,
+      private _cajaService: CajaService
   ) {
     this.page_title = 'Recargar';
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.recarga = new Recarga(null, this.identity.sub,null,null,
-        '','');
+        '','',null);
+
+    //Trae caja, si esta abierta o cerrada
+    this.caja = JSON.parse(localStorage.getItem('caja'));
 
   }
 
@@ -77,16 +86,16 @@ export class RecargaNewComponent implements OnInit {
 
           this._empresaService.getValor(this.recarga.valor_id).subscribe(
               response => {
-                  let valor = response.valor;
+                  this.valor = response.valor;
 
                   this._monedaService.updateCotizacion().subscribe(
                       response => {
 
-                          this._monedaService.getMoneda(valor.moneda_id).subscribe(
+                          this._monedaService.getMoneda(this.valor.moneda_id).subscribe(
                               response => {
                                   if (response.status == 'success') {
                                       this.recarga.valor_cotizacion = response.moneda.venta;
-                                      this.saveRecarga(form);
+                                      this.storeMovimiento(form);
 
                                   }
                               },
@@ -114,27 +123,64 @@ export class RecargaNewComponent implements OnInit {
 
   }
 
-    //Guarda la recarga
-    saveRecarga(form) {
-        this._recargaService.create(this.token, this.recarga).subscribe(
+    //Guarda movimiento de caja
+    storeMovimiento(form) {
+      let monto = this.valor.valor;
+      let valor_cotizacion = this.recarga.valor_cotizacion;
+      let valor = monto * parseInt(valor_cotizacion);
+
+      this.movimiento = new Movimiento(null, this.caja.caja.id,'Salida',valor,'Recarga');
+
+      this._cajaService.createMovimiento(this.token, this.movimiento).subscribe(
+          response => {
+              if(response && response.status){
+                  this.storeRecarga(form);
+              }
+              else {
+                  this.status = 'error';
+              }
+              },
+              error => {
+              this.status = 'error';
+              console.log(<any>error);
+          }
+          );
+
+    }
+    storeRecarga(form){
+
+        this._cajaService.getLastMovimiento(this.token).subscribe(
             response => {
-                if(response.status == 'success'){
-                    this.recarga = response.recarga;
-                    this.status = 'success';
-                    form.reset();
-                }
-                else{
-                    this.status = 'error';
-                }
-            },
+                this.recarga.movimiento_id = response.movimiento.id;
+
+                this._recargaService.create(this.token, this.recarga).subscribe(
+                    response => {
+                        if(response.status == 'success'){
+                            this.recarga = response.recarga;
+                            this.status = 'success';
+                            form.reset();
+                        }
+                        else{
+                            this.status = 'error';
+                        }
+                    },
+                    error => {
+                        this.status = 'error';
+                        console.log(<any>error);
+                    }
+                );
+
+
+
+            } ,
             error => {
-                this.status = 'error';
-                console.log(<any>error);
+                console.log(error);
             }
         );
+
+
+
     }
-
-
 
 
 }

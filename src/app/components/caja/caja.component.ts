@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CajaService } from '../../services/caja.service';
 import { UserService } from '../../services/user.service';
+import { Movimiento } from '../../models/movimiento';
 import { global } from '../../services/global';
 
 @Component({
@@ -15,6 +16,9 @@ export class CajaComponent implements OnInit {
   public identity;
   public token;
   public caja;
+  public status;
+  public movimiento: Movimiento;
+  public movimientos;
 
 
   //Configuracion de paginacion
@@ -31,6 +35,8 @@ export class CajaComponent implements OnInit {
   };
   config: any;
 
+  tipos=['Entrada','Salida'];
+
   constructor(
       private _userService: UserService,
       private _cajaService: CajaService
@@ -39,26 +45,22 @@ export class CajaComponent implements OnInit {
     this.url = global.url;
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
+
   }
 
   ngOnInit(): void {
-    this.getCaja();
+      this.movimiento = new Movimiento(null, null,'Entrada',null,'');
+      this.getCaja();
+      this.getMovimientos();
+
   }
 
-  /*pageChanged(event){
+  pageChanged(event){
     this.config.currentPage = event;
-  }*/
-
-  //Va en getMovimientos
-  /*this.config = {
-    itemsPerPage: 15,
-    currentPage: 1,
-    totalItems: this.recargas.length
-  };*/
-
+  }
 
   getCaja(){
-    this._cajaService.getCaja(this.token).subscribe(
+    this._cajaService.getLastCaja(this.token).subscribe(
         response => {
           if(response.status == 'success'){
             this.caja = response.caja;
@@ -70,4 +72,89 @@ export class CajaComponent implements OnInit {
         }
     )
   }
+
+  cerrarCaja(){
+    this._cajaService.update(this.caja.id, this.caja, this.token).subscribe(
+        response => {
+          if(response && response.status){
+            this.status = 'success';
+            localStorage.removeItem('caja');
+            this.getCaja();
+          }
+          else{
+            this.status = 'error';
+          }
+
+        },
+        error => {
+          this.status = 'error';
+          console.log(<any>error);
+        }
+    );
+
+  }
+
+  abrirCaja(){
+    this._cajaService.create(this.token).subscribe(
+        response => {
+          if(response && response.status){
+            this.status = 'success';
+            localStorage.setItem('caja', JSON.stringify(response));
+            this.getCaja();
+          }
+          else{
+            this.status = 'error';
+          }
+
+        },
+        error => {
+          this.status = 'error';
+          console.log(<any>error);
+        }
+    );
+
+  }
+
+
+    getMovimientos(){
+        this._cajaService.getMovimientos(this.token).subscribe(
+            response => {
+                if(response.status == 'success'){
+                    this.movimientos = response.movimientos;
+
+                    this.config = {
+                        itemsPerPage: 15,
+                        currentPage: 1,
+                        totalItems: this.movimientos.length
+                      };
+                }
+            },
+            error => {
+                console.log('error');
+            }
+        )
+    }
+
+    onSubmit(form){
+      this.movimiento.caja_id = this.caja.id;
+      this._cajaService.createMovimiento(this.token, this.movimiento).subscribe(
+            response => {
+                if(response && response.status){
+                    this.status = 'success';
+                    form.controls['valor'].reset();
+                    this.ngOnInit();
+                }
+                else{
+                    this.status = 'error';
+                }
+
+            },
+            error => {
+                this.status = 'error';
+                console.log(<any>error);
+            }
+        );
+    }
+
+
 }
