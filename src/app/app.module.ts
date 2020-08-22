@@ -32,6 +32,9 @@ import { CotizacionComponent } from './components/cotizacion/cotizacion.componen
 import { RecargaNewComponent } from './components/recarga-new/recarga-new.component';
 import { RecargaDetailComponent } from './components/recarga-detail/recarga-detail.component';
 import { CajaComponent } from './components/caja/caja.component';
+import { GiroComponent } from './components/giro/giro.component';
+import { GiroNewComponent } from './components/giro-new/giro-new.component';
+import { GiroDetailComponent } from './components/giro-detail/giro-detail.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,10 @@ import { CajaComponent } from './components/caja/caja.component';
       CotizacionComponent,
       RecargaNewComponent,
       RecargaDetailComponent,
-      CajaComponent
+      CajaComponent,
+      GiroComponent,
+      GiroNewComponent,
+      GiroDetailComponent
   ],
     imports: [
         BrowserModule,

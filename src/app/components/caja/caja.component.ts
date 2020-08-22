@@ -49,7 +49,8 @@ export class CajaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.movimiento = new Movimiento(null, null,'Entrada',null,'');
+      this.movimiento = new Movimiento(null, null,'Entrada',null,
+          '', null);
       this.getCaja();
       this.getMovimientos();
 

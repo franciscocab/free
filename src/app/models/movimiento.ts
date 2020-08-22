@@ -4,6 +4,7 @@ export class Movimiento{
         public caja_id: number,
         public tipo: string,
         public valor: number,
-        public description: string
+        public description: string,
+        public recarga_id: number
     ){}
 }

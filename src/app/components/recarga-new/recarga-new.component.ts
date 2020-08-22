@@ -39,7 +39,7 @@ export class RecargaNewComponent implements OnInit {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.recarga = new Recarga(null, this.identity.sub,null,null,
-        '','',null);
+        '','');
 
     //Trae caja, si esta abierta o cerrada
     this.caja = JSON.parse(localStorage.getItem('caja'));
@@ -95,7 +95,7 @@ export class RecargaNewComponent implements OnInit {
                               response => {
                                   if (response.status == 'success') {
                                       this.recarga.valor_cotizacion = response.moneda.venta;
-                                      this.storeMovimiento(form);
+                                      this.store(form);
 
                                   }
                               },
@@ -123,61 +123,46 @@ export class RecargaNewComponent implements OnInit {
 
   }
 
-    //Guarda movimiento de caja
-    storeMovimiento(form) {
-      let monto = this.valor.valor;
-      let valor_cotizacion = this.recarga.valor_cotizacion;
-      let valor = monto * parseInt(valor_cotizacion);
-
-      this.movimiento = new Movimiento(null, this.caja.caja.id,'Salida',valor,'Recarga');
-
-      this._cajaService.createMovimiento(this.token, this.movimiento).subscribe(
-          response => {
-              if(response && response.status){
-                  this.storeRecarga(form);
-              }
-              else {
-                  this.status = 'error';
-              }
-              },
-              error => {
-              this.status = 'error';
-              console.log(<any>error);
-          }
-          );
-
-    }
-    storeRecarga(form){
-
-        this._cajaService.getLastMovimiento(this.token).subscribe(
+    //Guarda recarga y el movimiento
+    store(form) {
+        this._recargaService.create(this.token, this.recarga).subscribe(
             response => {
-                this.recarga.movimiento_id = response.movimiento.id;
+                if(response.status == 'success'){
+                    this.recarga = response.recarga;
 
-                this._recargaService.create(this.token, this.recarga).subscribe(
-                    response => {
-                        if(response.status == 'success'){
-                            this.recarga = response.recarga;
-                            this.status = 'success';
-                            form.reset();
-                        }
-                        else{
+                    let monto = this.valor.valor;
+                    let valor_cotizacion = this.recarga.valor_cotizacion;
+                    let valor = monto * parseInt(valor_cotizacion);
+
+                    this.movimiento = new Movimiento(null, this.caja.caja.id,'Salida',valor,
+                        'Recarga', this.recarga.id);
+
+                    //Guarda el movimiento
+                    this._cajaService.createMovimiento(this.token, this.movimiento).subscribe(
+                        response => {
+                            if(response && response.status){
+                                this.status = 'success';
+                                form.reset();
+                            }
+                            else {
+                                this.status = 'error';
+                            }
+                        },
+                        error => {
                             this.status = 'error';
+                            console.log(<any>error);
                         }
-                    },
-                    error => {
-                        this.status = 'error';
-                        console.log(<any>error);
-                    }
-                );
-
-
-
-            } ,
+                    );
+                }
+                else{
+                    this.status = 'error';
+                }
+            },
             error => {
-                console.log(error);
+                this.status = 'error';
+                console.log(<any>error);
             }
         );
-
 
 
     }

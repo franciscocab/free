@@ -25,6 +25,9 @@ import {CotizacionComponent} from './components/cotizacion/cotizacion.component'
 import {RecargaNewComponent} from './components/recarga-new/recarga-new.component';
 import {RecargaDetailComponent} from './components/recarga-detail/recarga-detail.component';
 import {CajaComponent} from './components/caja/caja.component';
+import {GiroComponent} from './components/giro/giro.component';
+import {GiroNewComponent} from './components/giro-new/giro-new.component';
+import {GiroDetailComponent} from './components/giro-detail/giro-detail.component';
 
 // Definir las rutas
 const appRoutes: Routes = [
@@ -47,6 +50,9 @@ const appRoutes: Routes = [
     { path: 'nueva-recarga', component: RecargaNewComponent, canActivate: [IdentityGuard] },
     { path: 'recarga/:id', component: RecargaDetailComponent, canActivate: [IdentityGuard] },
     { path: 'caja', component: CajaComponent, canActivate: [IdentityGuard] },
+    { path: 'giros', component: GiroComponent, canActivate: [IdentityGuard] },
+    { path: 'nuevo-giro', component: GiroNewComponent, canActivate: [IdentityGuard] },
+    { path: 'giro/:id', component: GiroDetailComponent, canActivate: [IdentityGuard] },
 
     { path: '**', component: ErrorComponent },
 

@@ -1,0 +1,47 @@
+<div class="loading" *ngIf="!giros">
+    Cargando...
+</div>
+
+<div class="col-md-12 mt-3" *ngIf="giros">
+    <h1>{{page_title}}</h1>
+
+    <!-- Tabla de giros-->
+    <div class="col-md-12 ml-0 pl-0">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Valor</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr *ngFor="let giro of giros | paginate: config"
+                [routerLink]="['/giro', giro.id]" role="button">
+                <td>{{giro.created_at |  date:'dd/M/y h:mm a'}}</td>
+                <td>{{giro.client}}</td>
+                <td *ngIf="giro.valor">{{giro.valor.valor_guaranies}}</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <pagination-controls
+                [maxSize]="maxSize"
+                [directionLinks]="directionLinks"
+                [autoHide]="autoHide"
+                [responsive]="responsive"
+                [previousLabel]="labels.previousLabel"
+                [nextLabel]="labels.nextLabel"
+                [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                (pageChange)="pageChanged($event)">
+
+        </pagination-controls>
+
+    </div>
+
+</div>
