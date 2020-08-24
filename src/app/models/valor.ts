@@ -4,7 +4,7 @@ export class Valor{
         public empresa_id: number,
         public moneda_id: number,
         public name: string,
-        public valor: string,
-        public valor_guaranies: string
+        public valor: number,
+        public valor_guaranies: number
     ){}
 }

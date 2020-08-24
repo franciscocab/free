@@ -30,7 +30,7 @@ export class MonedaDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.moneda = new Moneda(1,'','','');
+      this.moneda = new Moneda(1,'',null);
       this.getMoneda();
   }
 

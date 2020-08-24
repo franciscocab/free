@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CajaService } from '../../services/caja.service';
 import { UserService } from '../../services/user.service';
 import { Movimiento } from '../../models/movimiento';
+import { Caja } from '../../models/caja';
 import { global } from '../../services/global';
 
 @Component({
@@ -15,10 +16,12 @@ export class CajaComponent implements OnInit {
   public url;
   public identity;
   public token;
-  public caja;
+  public caja: Caja;
   public status;
   public movimiento: Movimiento;
   public movimientos;
+  public mbc;
+  public valor_actual = 0;
 
 
   //Configuracion de paginacion
@@ -35,7 +38,7 @@ export class CajaComponent implements OnInit {
   };
   config: any;
 
-  tipos=['Entrada','Salida'];
+  tipos = ['Entrada','Salida'];
 
   constructor(
       private _userService: UserService,
@@ -50,7 +53,7 @@ export class CajaComponent implements OnInit {
 
   ngOnInit(): void {
       this.movimiento = new Movimiento(null, null,'Entrada',null,
-          '', null);
+          '', null, null);
       this.getCaja();
       this.getMovimientos();
 
@@ -65,7 +68,7 @@ export class CajaComponent implements OnInit {
         response => {
           if(response.status == 'success'){
             this.caja = response.caja;
-
+            this.getMovimientosByCaja();
           }
         },
         error => {
@@ -75,11 +78,14 @@ export class CajaComponent implements OnInit {
   }
 
   cerrarCaja(){
+    this.caja.monto_cierre = this.valor_actual;
+
     this._cajaService.update(this.caja.id, this.caja, this.token).subscribe(
         response => {
           if(response && response.status){
             this.status = 'success';
             localStorage.removeItem('caja');
+            this.valor_actual = 0;
             this.getCaja();
           }
           else{
@@ -116,25 +122,24 @@ export class CajaComponent implements OnInit {
 
   }
 
+  getMovimientos(){
+      this._cajaService.getMovimientos(this.token).subscribe(
+          response => {
+              if(response.status == 'success'){
+                  this.movimientos = response.movimientos;
 
-    getMovimientos(){
-        this._cajaService.getMovimientos(this.token).subscribe(
-            response => {
-                if(response.status == 'success'){
-                    this.movimientos = response.movimientos;
-
-                    this.config = {
-                        itemsPerPage: 15,
-                        currentPage: 1,
-                        totalItems: this.movimientos.length
-                      };
-                }
-            },
-            error => {
-                console.log('error');
-            }
-        )
-    }
+                  this.config = {
+                      itemsPerPage: 15,
+                      currentPage: 1,
+                      totalItems: this.movimientos.length
+                  };
+              }
+              },
+          error => {
+              console.log('error');
+          }
+          )
+  }
 
     onSubmit(form){
       this.movimiento.caja_id = this.caja.id;
@@ -155,6 +160,35 @@ export class CajaComponent implements OnInit {
                 console.log(<any>error);
             }
         );
+    }
+
+    getMovimientosByCaja(){
+      if(this.caja){
+          this._cajaService.getMovimientosByCaja(this.token, this.caja.id).subscribe(
+              response => {
+                  if(response.status == 'success'){
+                      this.mbc = response.movimientos;
+                      this.montoSumado(this.mbc);
+                  }
+              },
+              error => {
+                  console.log('error');
+              }
+          )
+      }
+    }
+
+    montoSumado(mbc){
+      let sumador = 0;
+      for(let i = 0; i < mbc.length; i++){
+          if(mbc[i].tipo == 'Entrada'){
+              sumador = sumador + mbc[i].valor;
+          }
+          else{
+              sumador = sumador - mbc[i].valor;
+          }
+      }
+      this.valor_actual = sumador + this.caja.monto_apertura;
     }
 
 

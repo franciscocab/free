@@ -135,7 +135,7 @@ export class RecargaNewComponent implements OnInit {
                     let valor = monto * parseInt(valor_cotizacion);
 
                     this.movimiento = new Movimiento(null, this.caja.caja.id,'Salida',valor,
-                        'Recarga', this.recarga.id);
+                        'Recarga', this.recarga.id,null);
 
                     //Guarda el movimiento
                     this._cajaService.createMovimiento(this.token, this.movimiento).subscribe(

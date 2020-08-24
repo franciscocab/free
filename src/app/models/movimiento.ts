@@ -5,6 +5,7 @@ export class Movimiento{
         public tipo: string,
         public valor: number,
         public description: string,
-        public recarga_id: number
+        public recarga_id: number,
+        public giro_id: number,
     ){}
 }

@@ -27,7 +27,7 @@ export class MonedaNewComponent implements OnInit {
     this.page_title = "Crear nueva moneda";
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    this.moneda = new Moneda(1,'','','');
+    this.moneda = new Moneda(1,'',null);
 
   }
 

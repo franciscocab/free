@@ -32,7 +32,7 @@ export class EmpresaDetailComponent implements OnInit {
   ) {
     this.url = global.url;
     this.token = this._userService.getToken();
-    this.valor = new Valor(null,null,1,'','','');
+    this.valor = new Valor(null,null,1,'',null,null);
   }
 
   ngOnInit() {

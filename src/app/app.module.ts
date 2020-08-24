@@ -35,6 +35,7 @@ import { CajaComponent } from './components/caja/caja.component';
 import { GiroComponent } from './components/giro/giro.component';
 import { GiroNewComponent } from './components/giro-new/giro-new.component';
 import { GiroDetailComponent } from './components/giro-detail/giro-detail.component';
+import { CajaDetailComponent } from './components/caja-detail/caja-detail.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { GiroDetailComponent } from './components/giro-detail/giro-detail.compon
       CajaComponent,
       GiroComponent,
       GiroNewComponent,
-      GiroDetailComponent
+      GiroDetailComponent,
+      CajaDetailComponent
   ],
     imports: [
         BrowserModule,
