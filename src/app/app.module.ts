@@ -5,7 +5,7 @@ import { HttpClientModule  } from '@angular/common/http';
 import { routing, appRoutingProviders } from './app.routing';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { AngularFileUploaderModule } from "angular-file-uploader";
-
+import { CurrencyMaskModule} from 'ng2-currency-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppComponent } from './app.component';
@@ -36,6 +36,9 @@ import { GiroComponent } from './components/giro/giro.component';
 import { GiroNewComponent } from './components/giro-new/giro-new.component';
 import { GiroDetailComponent } from './components/giro-detail/giro-detail.component';
 import { CajaDetailComponent } from './components/caja-detail/caja-detail.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -73,7 +76,8 @@ import { CajaDetailComponent } from './components/caja-detail/caja-detail.compon
         FroalaEditorModule.forRoot(),
         FroalaViewModule.forRoot(),
         AngularFileUploaderModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        CurrencyMaskModule
     ],
   providers: [
       appRoutingProviders,

@@ -23,16 +23,6 @@
 
         </div>
 
-        <div class="form-group">
-            <label for="symbol">Símbolo*</label>
-            <input type="text" name="symbol" class="form-control" #symbol=ngModel
-                   [(ngModel)]="moneda.symbol" required />
-
-            <small *ngIf="!symbol.valid && symbol.touched" class="invalid-feedback d-block">
-                El símbolo de la moneda no es válida
-            </small>
-
-        </div>
 
         <div class="form-group">
             <label for="valor_guaranies">Valor*</label>

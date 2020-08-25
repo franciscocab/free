@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label for="name">Nombre*</label>
                 <input type="text" name="name" class="form-control" #name="ngModel"
-                       [(ngModel)]="empresa.name" required pattern="[a-zA-Z]+">
+                       [(ngModel)]="empresa.name" required>
 
                 <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">
                     El nombre no es válido
@@ -60,17 +60,27 @@
                         <input type="text" name="valor_name" class="form-control" #valor_name="ngModel"
                          placeholder="Nombre" [(ngModel)]="valor.name" required>
 
-                        <small *ngIf="!valor_name.valid && valor_name.touched"
+                        <small *ngIf="valor_name.invalid && (valor_name.dirty || valor_name.touched)"
                                class="invalid-feedback d-block">
                             El nombre no es válido
                         </small>
                     </td>
 
                     <td>
-                        <input type="text" name="valor_valor" class="form-control" #valor_valor="ngModel"
-                               placeholder="00000" [(ngModel)]="valor.valor" required pattern="[0-9.]*">
+                        <input type="text" name="valor_valor"  placeholder="$ 0,00" class="form-control"
+                               #valor_valor="ngModel" required
+                               currencyMask [(ngModel)]="valor.valor"
+                        [options]="{
+                        align: 'right',
+                        allowNegative: true,
+                        decimal: ',',
+                        precision: 2,
+                        prefix: '$ ',
+                        suffix: '',
+                        thousands: '.' }"
+                        [ngModelOptions]="{standalone: true}">
 
-                        <small *ngIf="!valor_valor.valid && valor_valor.touched"
+                        <small *ngIf="valor_valor.invalid && (valor_valor.dirty || valor_valor.touched)"
                                class="invalid-feedback d-block">
                             El valor no es válido
                         </small>
@@ -87,17 +97,25 @@
                     </td>
 
                     <td>
-                        <input type="text" name="valor_valor_guaranies" class="form-control" #valor_valor_guaranies="ngModel"
-                               placeholder="00000" [(ngModel)]="valor.valor_guaranies" required pattern="[0-9.]*">
+                        <input type="text" name="valor_valor_guaranies"  placeholder="Gs 0,00" class="form-control"
+                               #valor_valor_guaranies="ngModel" required pattern="[0-9.]*"
+                               currencyMask [(ngModel)]="valor.valor_guaranies"
+                               [options]="{
+                        align: 'right',
+                        allowNegative: true,
+                        decimal: ',',
+                        precision: 0,
+                        prefix: 'G$ ',
+                        suffix: '',
+                        thousands: '.' }"
+                        [ngModelOptions]="{standalone: true}">
 
-                        <small *ngIf="!valor_valor_guaranies.valid && valor_valor_guaranies.touched"
+                        <small *ngIf="valor_valor_guaranies.invalid && (valor_valor_guaranies.dirty || valor_valor_guaranies.touched)"
                                class="invalid-feedback d-block">
                             El valor no es válido
                         </small>
 
                     </td>
-
-
 
                     <td>
                         <input type="submit" value="Añadir" class="btn btn-success"
@@ -107,9 +125,9 @@
 
                 <tr *ngFor="let valor of valores">
                     <td>{{valor.name}}</td>
-                    <td>{{valor.valor}}</td>
+                    <td>$ {{valor.valor}}</td>
                     <td>{{valor.moneda.name}}</td>
-                    <td>{{valor.valor_guaranies}}</td>
+                    <td>Gs {{valor.valor_guaranies}}</td>
                     <td>
                         <input (click)="deleteValor(valor.id)" type="button" value="Borrar"
                                class="btn btn-danger"/>

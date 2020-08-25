@@ -66,14 +66,25 @@
 
 
             <div class="col">
-                <input type="text" name="valor" class="form-control" #valor="ngModel"
-                       placeholder="Valor de movimiento" [(ngModel)]="movimiento.valor"
-                       required pattern="[0-9.]*">
+                <input type="text" name="valor"  placeholder="Gs 0,00" class="form-control"
+                       #valor="ngModel" required pattern="[0-9.]*"
+                       currencyMask [(ngModel)]="movimiento.valor"
+                       [options]="{
+                        align: 'right',
+                        allowNegative: true,
+                        decimal: ',',
+                        precision: 0,
+                        prefix: 'G$ ',
+                        suffix: '',
+                        thousands: '.' }"
+                       [ngModelOptions]="{standalone: true}">
 
                     <small *ngIf="!valor.valid && valor.touched"
                            class="invalid-feedback d-block">
                         El valor no es válido
                     </small>
+
+
 
             </div>
 
@@ -114,7 +125,7 @@
                 <td>{{movimiento.caja_id}}</td>
                 <td>{{movimiento.tipo}}</td>
                 <td>{{movimiento.description}}</td>
-                <td>{{movimiento.valor}}</td>
+                <td>Gs {{movimiento.valor}}</td>
 
             </tr>
 

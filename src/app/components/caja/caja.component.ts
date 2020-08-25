@@ -52,7 +52,7 @@ export class CajaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.movimiento = new Movimiento(null, null,'Entrada',null,
+      this.movimiento = new Movimiento(null, null,'Entrada',0,
           '', null, null);
       this.getCaja();
       this.getMovimientos();
@@ -84,7 +84,6 @@ export class CajaComponent implements OnInit {
         response => {
           if(response && response.status){
             this.status = 'success';
-            localStorage.removeItem('caja');
             this.valor_actual = 0;
             this.getCaja();
           }
@@ -106,7 +105,6 @@ export class CajaComponent implements OnInit {
         response => {
           if(response && response.status){
             this.status = 'success';
-            localStorage.setItem('caja', JSON.stringify(response));
             this.getCaja();
           }
           else{
@@ -147,7 +145,7 @@ export class CajaComponent implements OnInit {
             response => {
                 if(response && response.status){
                     this.status = 'success';
-                    form.controls['valor'].reset();
+                    /*form.controls['valor'].reset();*/
                     this.ngOnInit();
                 }
                 else{

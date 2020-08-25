@@ -43,7 +43,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRecargas();
-
   }
 
   pageChanged(event){

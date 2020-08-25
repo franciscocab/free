@@ -32,10 +32,11 @@ export class EmpresaDetailComponent implements OnInit {
   ) {
     this.url = global.url;
     this.token = this._userService.getToken();
-    this.valor = new Valor(null,null,1,'',null,null);
+
   }
 
   ngOnInit() {
+      this.valor = new Valor(null,null,null,'',0,0);
       this._route.params.subscribe(params => {
           this.empresaId = +params['id'];
 
@@ -120,8 +121,7 @@ export class EmpresaDetailComponent implements OnInit {
           response => {
               if(response.status == 'success'){
                   form.reset();
-                  this.getValores();
-
+                  this.ngOnInit();
               }
               else{
                   console.log('error');

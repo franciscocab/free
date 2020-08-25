@@ -41,14 +41,26 @@ export class RecargaNewComponent implements OnInit {
     this.recarga = new Recarga(null, this.identity.sub,null,null,
         '','');
 
-    //Trae caja, si esta abierta o cerrada
-    this.caja = JSON.parse(localStorage.getItem('caja'));
 
   }
 
 
   ngOnInit(): void {
     this.getEmpresas();
+    this.getCaja();
+  }
+
+  getCaja(){
+      this._cajaService.getLastCaja(this.token).subscribe(
+          response => {
+              if(response.status == 'success'){
+                  this.caja = response.caja;
+              }
+              },
+          error => {
+              console.log('error');
+          }
+          )
   }
 
   getEmpresas(){
@@ -134,7 +146,7 @@ export class RecargaNewComponent implements OnInit {
                     let valor_cotizacion = this.recarga.valor_cotizacion;
                     let valor = monto * parseInt(valor_cotizacion);
 
-                    this.movimiento = new Movimiento(null, this.caja.caja.id,'Salida',valor,
+                    this.movimiento = new Movimiento(null, this.caja.id,'Salida',valor,
                         'Recarga', this.recarga.id,null);
 
                     //Guarda el movimiento

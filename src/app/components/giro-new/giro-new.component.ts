@@ -36,13 +36,25 @@ export class GiroNewComponent implements OnInit {
     this.token = this._userService.getToken();
     this.giro = new Giro(null, this.identity.sub,null,'');
 
-    //Trae caja, si esta abierta o cerrada
-    this.caja = JSON.parse(localStorage.getItem('caja'));
   }
 
   ngOnInit(): void {
     this.getAllValores();
+    this.getCaja();
   }
+
+    getCaja(){
+        this._cajaService.getLastCaja(this.token).subscribe(
+            response => {
+                if(response.status == 'success'){
+                    this.caja = response.caja;
+                }
+            },
+            error => {
+                console.log('error');
+            }
+        )
+    }
 
   getAllValores(){
     this._empresaService.getAllValores().subscribe(
