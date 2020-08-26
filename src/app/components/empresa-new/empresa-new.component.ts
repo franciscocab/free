@@ -39,7 +39,6 @@ export class EmpresaNewComponent implements OnInit {
             this.empresa = response.empresa;
             this.status = 'success';
             form.reset();
-
           }
           else{
             this.status = 'error';

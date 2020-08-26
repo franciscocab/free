@@ -1,1 +1,78 @@
-<p>caja-detail works!</p>
+<div class="col-md-12 mt-3" *ngIf="caja">
+    <h1>{{page_title}} {{caja.id}}</h1>
+    <hr/>
+
+
+    <!-- Datos de la caja -->
+    <div class="col-md-5 ml-0 pl-0">
+
+        <div class="form-group">
+            <label>Fecha apertura: {{caja.created_at | date:'dd/M/y h:mm a' }}</label>
+        </div>
+        <div class="form-group">
+            <label>Monto apertura: {{caja.monto_apertura}}</label>
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+            <label>Fecha cierre: {{caja.updated_at | date:'dd/M/y h:mm a' }}</label>
+        </div>
+        <div class="form-group">
+            <label>Monto cierre: {{caja.monto_cierre}}</label>
+        </div>
+
+
+    </div>
+
+
+    <!-- Tabla de Movimientos-->
+    <div class="col-md-12 ml-0 pl-0 mt-5">
+        <div class="form-group">
+            <h3>Movimientos de caja</h3>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Monto</th>
+            </tr>
+            </thead>
+
+            <tbody *ngIf="movimientos">
+
+            <tr *ngFor="let movimiento of movimientos | paginate: config">
+                <td>{{movimiento.created_at |  date:'dd/M/y h:mm a'}}</td>
+                <td>{{movimiento.tipo}}</td>
+                <td>{{movimiento.description}}</td>
+                <td>Gs {{movimiento.valor}}</td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+        <pagination-controls
+                [maxSize]="maxSize"
+                [directionLinks]="directionLinks"
+                [autoHide]="autoHide"
+                [responsive]="responsive"
+                [previousLabel]="labels.previousLabel"
+                [nextLabel]="labels.nextLabel"
+                [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"
+                [screenReaderPageLabel]="labels.screenReaderPageLabel"
+                [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"
+                (pageChange)="pageChanged($event)">
+
+        </pagination-controls>
+
+    </div>
+
+
+</div>
+
+
+
+

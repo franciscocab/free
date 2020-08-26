@@ -7,6 +7,9 @@
 
     <!-- Tabla de recargas-->
     <div class="col-md-12 ml-0 pl-0">
+        <div class="col-md-6 ml-0 pl-0 form-group ">
+            <input class="form-control" [(ngModel)]="searchText" placeholder="Buscar">
+        </div>
         <table class="table table-hover">
             <thead>
             <tr>
@@ -19,7 +22,7 @@
 
             <tbody>
 
-            <tr *ngFor="let recarga of recargas | paginate: config"
+            <tr *ngFor="let recarga of recargas | filter: searchText | paginate: config"
                 [routerLink]="['/recarga',recarga.id]" role="button">
                 <td>{{recarga.created_at |  date:'dd/M/y h:mm a'}}</td>
                 <td>{{recarga.client}}</td>

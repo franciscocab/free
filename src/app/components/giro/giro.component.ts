@@ -16,6 +16,7 @@ export class GiroComponent implements OnInit {
   public identity;
   public token;
   public giros;
+  public searchText: string;
 
   //Configuracion de paginacion
   public maxSize: number = 7;

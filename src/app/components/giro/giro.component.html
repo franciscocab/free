@@ -7,6 +7,10 @@
 
     <!-- Tabla de giros-->
     <div class="col-md-12 ml-0 pl-0">
+        <div class="col-md-6 ml-0 pl-0 form-group ">
+            <input class="form-control" [(ngModel)]="searchText" placeholder="Buscar">
+        </div>
+
         <table class="table table-hover">
             <thead>
             <tr>
@@ -18,7 +22,7 @@
 
             <tbody>
 
-            <tr *ngFor="let giro of giros | paginate: config"
+            <tr *ngFor="let giro of giros | filter: searchText | paginate: config"
                 [routerLink]="['/giro', giro.id]" role="button">
                 <td>{{giro.created_at |  date:'dd/M/y h:mm a'}}</td>
                 <td>{{giro.client}}</td>

@@ -36,8 +36,7 @@ import { GiroComponent } from './components/giro/giro.component';
 import { GiroNewComponent } from './components/giro-new/giro-new.component';
 import { GiroDetailComponent } from './components/giro-detail/giro-detail.component';
 import { CajaDetailComponent } from './components/caja-detail/caja-detail.component';
-
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -77,7 +76,8 @@ import { CajaDetailComponent } from './components/caja-detail/caja-detail.compon
         FroalaViewModule.forRoot(),
         AngularFileUploaderModule,
         NgxPaginationModule,
-        CurrencyMaskModule
+        CurrencyMaskModule,
+        Ng2SearchPipeModule
     ],
   providers: [
       appRoutingProviders,

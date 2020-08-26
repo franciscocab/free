@@ -28,6 +28,7 @@ import {CajaComponent} from './components/caja/caja.component';
 import {GiroComponent} from './components/giro/giro.component';
 import {GiroNewComponent} from './components/giro-new/giro-new.component';
 import {GiroDetailComponent} from './components/giro-detail/giro-detail.component';
+import {CajaDetailComponent} from './components/caja-detail/caja-detail.component';
 
 // Definir las rutas
 const appRoutes: Routes = [
@@ -53,6 +54,7 @@ const appRoutes: Routes = [
     { path: 'giros', component: GiroComponent, canActivate: [IdentityGuard] },
     { path: 'nuevo-giro', component: GiroNewComponent, canActivate: [IdentityGuard] },
     { path: 'giro/:id', component: GiroDetailComponent, canActivate: [IdentityGuard] },
+    { path: 'caja/:id', component: CajaDetailComponent, canActivate: [IdentityGuard] },
 
     { path: '**', component: ErrorComponent },
 

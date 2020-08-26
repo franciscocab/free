@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   public identity;
   public token;
   public recargas;
+  public searchText: string;
 
   //Configuracion de paginacion
   public maxSize: number = 7;

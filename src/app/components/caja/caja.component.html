@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between">
         <div>
             <h1>
-                {{page_title}} {{caja.estado}}
+                {{page_title}} {{caja.id}} {{caja.estado}}
             </h1>
         </div>
 
@@ -47,7 +47,8 @@
 
     <hr>
 
-    <form class="mt-3" *ngIf="movimiento && caja.estado == 'Abierta'" #movimientoForm="ngForm" (ngSubmit)="onSubmit(movimientoForm)">
+    <form class="mt-3" *ngIf="movimiento && caja.estado == 'Abierta'" #movimientoForm="ngForm"
+          (ngSubmit)="onSubmit(movimientoForm)">
         <div class="form-row">
             <div class="col">
 
@@ -100,12 +101,15 @@
     </form>
 
 
-
     <!-- Tabla de Movimientos-->
     <div class="col-md-12 ml-0 pl-0 mt-5">
         <div class="form-group">
             <h3>Movimientos de caja</h3>
         </div>
+        <div class="col-md-6 ml-0 pl-0 form-group ">
+            <input class="form-control" [(ngModel)]="searchText" placeholder="Buscar">
+        </div>
+
         <table class="table table-hover">
             <thead>
             <tr>
@@ -119,10 +123,10 @@
 
             <tbody *ngIf="movimientos">
 
-            <tr *ngFor="let movimiento of movimientos | paginate: config"
-                [routerLink]="['/movimiento',movimiento.id]" role="button">
+            <tr *ngFor="let movimiento of movimientos | filter: searchText | paginate: config">
                 <td>{{movimiento.created_at |  date:'dd/M/y h:mm a'}}</td>
-                <td>{{movimiento.caja_id}}</td>
+                <td style="color: darkred" [routerLink]="['/caja/',movimiento.caja_id]"
+                    role="button">{{movimiento.caja_id}}</td>
                 <td>{{movimiento.tipo}}</td>
                 <td>{{movimiento.description}}</td>
                 <td>Gs {{movimiento.valor}}</td>

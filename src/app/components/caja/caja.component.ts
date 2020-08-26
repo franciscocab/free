@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CajaService } from '../../services/caja.service';
 import { UserService } from '../../services/user.service';
 import { Movimiento } from '../../models/movimiento';
@@ -22,6 +22,7 @@ export class CajaComponent implements OnInit {
   public movimientos;
   public mbc;
   public valor_actual = 0;
+  public searchText: string;
 
 
   //Configuracion de paginacion

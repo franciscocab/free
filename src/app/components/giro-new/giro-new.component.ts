@@ -82,7 +82,7 @@ export class GiroNewComponent implements OnInit {
                 response => {
                   let valor = response.valor.valor_guaranies;
 
-                  this.movimiento = new Movimiento(null, this.caja.caja.id,'Entrada', valor,
+                  this.movimiento = new Movimiento(null, this.caja.id,'Entrada', valor,
                       'Giro', null, this.giro.id);
 
 
