@@ -36,7 +36,7 @@ export class EmpresaDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.valor = new Valor(null,null,null,'',0,0);
+      this.valor = new Valor(null,null,null,'',0,0, 0);
       this._route.params.subscribe(params => {
           this.empresaId = +params['id'];
 

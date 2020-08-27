@@ -143,8 +143,11 @@ export class RecargaNewComponent implements OnInit {
                     this.recarga = response.recarga;
 
                     let monto = this.valor.valor;
-                    let valor_cotizacion = this.recarga.valor_cotizacion;
-                    let valor = monto * parseInt(valor_cotizacion);
+                    let valor_cotizacion = parseInt(this.recarga.valor_cotizacion);
+
+                    let valor_guaranies = monto * valor_cotizacion;
+                    let impuesto = (valor_guaranies * this.valor.impuesto) / 100;
+                    let valor = valor_guaranies + impuesto;
 
                     this.movimiento = new Movimiento(null, this.caja.id,'Salida',valor,
                         'Recarga', this.recarga.id,null);

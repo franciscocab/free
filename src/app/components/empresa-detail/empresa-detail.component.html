@@ -49,6 +49,7 @@
                     <th>Nombre</th>
                     <th>Valor (moneda)</th>
                     <th>Moneda</th>
+                    <th>Impuesto</th>
                     <th>Valor para venta (Gs.)</th>
                     <th>Acciones</th>
                 </tr>
@@ -97,6 +98,26 @@
                     </td>
 
                     <td>
+                        <input type="text" name="valor_impuesto"  placeholder="$ 0,00" class="form-control"
+                               #valor_impuesto="ngModel" required
+                               currencyMask [(ngModel)]="valor.impuesto"
+                               [options]="{
+                        align: 'right',
+                        allowNegative: true,
+                        decimal: ',',
+                        precision: 0,
+                        prefix: '% ',
+                        suffix: '',
+                        thousands: '.' }"
+                               [ngModelOptions]="{standalone: true}">
+
+                        <small *ngIf="valor_impuesto.invalid && (valor_impuesto.dirty || valor_impuesto.touched)"
+                               class="invalid-feedback d-block">
+                            El impuesto no es válido
+                        </small>
+                    </td>
+
+                    <td>
                         <input type="text" name="valor_valor_guaranies"  placeholder="Gs 0,00" class="form-control"
                                #valor_valor_guaranies="ngModel" required pattern="[0-9.]*"
                                currencyMask [(ngModel)]="valor.valor_guaranies"
@@ -127,6 +148,7 @@
                     <td>{{valor.name}}</td>
                     <td>$ {{valor.valor}}</td>
                     <td>{{valor.moneda.name}}</td>
+                    <td>% {{valor.impuesto}}</td>
                     <td>Gs {{valor.valor_guaranies}}</td>
                     <td>
                         <input (click)="deleteValor(valor.id)" type="button" value="Borrar"
